@@ -34,6 +34,8 @@ public abstract class AbstractRolloutUpdateCreate<T> extends AbstractNamedEntity
     protected ActionType actionType;
     protected Long forcedTime;
     protected Long startAt;
+    //HUYK Add new property to Astract class 
+    protected Integer deploymentBase;
 
     @Min(Action.WEIGHT_MIN)
     @Max(Action.WEIGHT_MAX)
@@ -108,6 +110,19 @@ public abstract class AbstractRolloutUpdateCreate<T> extends AbstractNamedEntity
      */
     public T startAt(final Long startAt) {
         this.startAt = startAt;
+        return (T) this;
+    }
+
+    //HUYK: Add a new abstact method to assign a value to the new property
+    /**
+     * Set OTA ID of the Rollout
+     * 
+     * @param deploymentBase
+     *            
+     * @return this builder
+     */
+    public T deploymentBase(final Integer deploymentBase) {
+        this.deploymentBase = deploymentBase;
         return (T) this;
     }
 

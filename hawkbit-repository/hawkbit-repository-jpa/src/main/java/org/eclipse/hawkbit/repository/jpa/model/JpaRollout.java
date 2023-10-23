@@ -138,9 +138,22 @@ public class JpaRollout extends AbstractJpaNamedEntity implements Rollout, Event
     @Min(Action.WEIGHT_MIN)
     @Max(Action.WEIGHT_MAX)
     private Integer weight;
+    //HUYK: Define a new attribute to hold OTA ID in class JpaRollout
+    @Column(name = "deployment_base")
+    private long deployment_base;
 
     @Transient
     private transient TotalTargetCountStatus totalTargetCountStatus;
+
+    //HUYK: Define new methods to get/set OTA ID value
+    @Override
+    public long getDeploymentBase() {
+        return deployment_base;
+    }
+
+    public void setDeploymentBase(final long deploy_base) {
+        this.deployment_base = deploy_base;
+    }
 
     @Override
     public DistributionSet getDistributionSet() {

@@ -39,6 +39,10 @@ public class MgmtRolloutRestRequestBody extends AbstractMgmtRolloutConditionsEnt
     @JsonProperty(required = false)
     private Integer weight;
 
+    //HUYK: Add a new json item for a client API to set a new OTA ID
+    @JsonProperty(required = true)
+    private Integer otaId;
+
     @JsonProperty(required = false)
     private Boolean confirmationRequired;
 
@@ -164,6 +168,22 @@ public class MgmtRolloutRestRequestBody extends AbstractMgmtRolloutConditionsEnt
      */
     public void setWeight(final Integer weight) {
         this.weight = weight;
+    }
+
+    //HUYK: To return OTA ID in a POST Rollout request
+    /**
+     * @return the priority of {@link Rollout}
+     */
+    public Integer getDeployBase() {
+        return otaId;
+    }
+
+    /**
+     * @param deployBase
+     *            the priority of {@link Rollout}
+     */
+    public void setDeployBase(final Integer otaId) {
+        this.otaId = otaId;
     }
 
     /**

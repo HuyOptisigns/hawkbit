@@ -164,7 +164,9 @@ public final class DataConversionHelper {
                 result.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder
                         .methodOn(DdiRootController.class, tenantAware.getCurrentTenant())
                         .getControllerBasedeploymentAction(tenantAware.getCurrentTenant(), target.getControllerId(),
-                                activeAction.getId(), calculateEtag(activeAction), null))
+                        //HUYK: Change to use OTA ID for deployement base ID so that remote devices can differentiate new OTA update or already applied OTA update
+                        /* activeAction.getId(), calculateEtag(activeAction), null)) */
+                        activeAction.getId(),  (int)activeAction.getRollout().getDeploymentBase(), null)) 
                         .withRel(DdiRestConstants.DEPLOYMENT_BASE_ACTION).expand());
             }
         }

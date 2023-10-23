@@ -65,6 +65,14 @@ public class MgmtRolloutResponseBody extends MgmtNamedEntity {
     @JsonProperty
     private String approveDecidedBy;
 
+    //HUYK: Add a new json field to report OTA ID of a rollout
+    @JsonProperty
+    private Long deploymentBase;
+    //HUYK: Add a new method to assign the current OTA ID to a reponse body
+    public void setDeploymentBase(Long deploy_base) {
+        deploymentBase = deploy_base;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }

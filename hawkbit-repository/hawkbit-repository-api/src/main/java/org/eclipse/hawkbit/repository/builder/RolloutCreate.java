@@ -111,6 +111,16 @@ public interface RolloutCreate {
      */
     RolloutCreate startAt(Long startAt);
 
+    //HUYK: Implement the abstract method to set OTA ID from a POST API
+    /**
+     * set OTA ID
+     * 
+     * @param deploymentBase
+     *            for {@link Rollout#deploymentBase()}
+     * @return updated builder instance
+     */
+    RolloutCreate deploymentBase(Integer deploymentBase);
+
     /**
      * @return peek on current state of {@link Rollout} in the builder
      */

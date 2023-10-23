@@ -85,6 +85,8 @@ final class MgmtRolloutMapper {
         body.setDeleted(rollout.isDeleted());
         body.setType(MgmtRestModelMapper.convertActionType(rollout.getActionType()));
         body.setForcetime(rollout.getForcedTime());
+        //HUYK: Read OTA ID of a rollout to build up Rollout GET body response
+        body.setDeploymentBase(rollout.getDeploymentBase());
         rollout.getWeight().ifPresent(body::setWeight);
 
         if (withDetails) {
@@ -128,7 +130,9 @@ final class MgmtRolloutMapper {
                 .set(distributionSet).targetFilterQuery(restRequest.getTargetFilterQuery())
                 .actionType(MgmtRestModelMapper.convertActionType(restRequest.getType()))
                 .forcedTime(restRequest.getForcetime()).startAt(restRequest.getStartAt())
-                .weight(restRequest.getWeight());
+                .weight(restRequest.getWeight())
+                //HUYK: Get OTA ID from REST request and assign to rollout's OTA ID property
+                .deploymentBase(restRequest.getDeployBase()); 
     }
 
     static RolloutGroupCreate fromRequest(final EntityFactory entityFactory, final MgmtRolloutGroup restRequest) {

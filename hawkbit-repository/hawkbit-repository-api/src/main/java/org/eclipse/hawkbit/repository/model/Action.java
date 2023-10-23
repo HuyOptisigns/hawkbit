@@ -49,6 +49,11 @@ public interface Action extends TenantAwareBaseEntity {
     int WEIGHT_MAX = 1000;
 
     /**
+     * HUYK add ACTION_ID
+     */
+    int ACTION_ID = -1;
+
+    /**
      * @return the distributionSet
      */
     DistributionSet getDistributionSet();

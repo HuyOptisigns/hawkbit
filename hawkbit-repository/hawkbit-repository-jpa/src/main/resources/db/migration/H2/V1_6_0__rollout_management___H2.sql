@@ -20,6 +20,7 @@
         parent_id bigint,
         rollout bigint,
         total_targets bigint,
+        deployment_base bigint,
         primary key (id)
     );
 	
@@ -41,6 +42,7 @@
 		action_type varchar(255) not null,
         forced_time bigint,
         total_targets bigint,
+        deployment_base bigint,
         primary key (id)
     );
 	

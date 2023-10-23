@@ -62,6 +62,9 @@ public interface Rollout extends NamedEntity {
      * @return {@link ActionType} of the rollout.
      */
     ActionType getActionType();
+    
+    //HUYK: Add a new method to return OTA ID of a rollout
+    long getDeploymentBase();
 
     /**
      * @return time in {@link TimeUnit#MILLISECONDS} after which
