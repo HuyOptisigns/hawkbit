@@ -212,10 +212,12 @@ public final class MgmtRestConstants {
      */
     public static final String REQUEST_PARAMETER_REPRESENTATION_MODE = "representation";
 
+    //HUYK: Change default representation mode to full so that it reports all status of a rollout 
+    // including OTA success/failed status
     /**
      * The default representation mode.
      */
-    public static final String REQUEST_PARAMETER_REPRESENTATION_MODE_DEFAULT = "compact";
+    public static final String REQUEST_PARAMETER_REPRESENTATION_MODE_DEFAULT = "full";
 
     /**
      * The software module type URL mapping rest resource.
