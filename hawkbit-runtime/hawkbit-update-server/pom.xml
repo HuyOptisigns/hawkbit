@@ -76,6 +76,11 @@
           <groupId>org.postgresql</groupId>
           <artifactId>postgresql</artifactId>
       </dependency>
+      <dependency> 
+         <groupId>org.mariadb.jdbc</groupId>
+         <artifactId>mariadb-java-client</artifactId>
+         <version>2.7.10</version>
+      </dependency>
 
       <!-- Test -->
       <dependency>
@@ -93,11 +98,11 @@
          <artifactId>spring-security-test</artifactId>
          <scope>test</scope>
       </dependency>
-      <dependency>
+      <!-- <dependency>
          <groupId>org.mariadb.jdbc</groupId>
          <artifactId>mariadb-java-client</artifactId>
          <scope>test</scope>
-      </dependency>
+      </dependency> -->
       <dependency>
          <groupId>org.eclipse.hawkbit</groupId>
          <artifactId>hawkbit-repository-test</artifactId>
