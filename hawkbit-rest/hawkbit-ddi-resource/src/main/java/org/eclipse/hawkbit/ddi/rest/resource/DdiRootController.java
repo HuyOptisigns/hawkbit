@@ -171,12 +171,12 @@ public class DdiRootController implements DdiRootControllerRestApi {
             int maxActionCount = controllerManagement.getMaxActionCount(controllerId).intValue();
             List<Action> activeActions = controllerManagement.findActiveActionsWithHighestWeight(controllerId,maxActionCount);
             int len = activeActions.size();
-            System.out.println("HUYK action list len=" + len);
-            for(int i=0; i<len; i++) {
-                if(activeActions.get(i).getStatus() ==  Status.RUNNING) {
-                    System.out.println("HUYK next activeAction id=" + i);
-                    activeAction = activeActions.get(i);
-                    break;
+            if(len > 1) {
+                for(int i=0; i<len; i++) {
+                    if(activeActions.get(i).getStatus() ==  Status.RUNNING) {
+                        activeAction = activeActions.get(i);
+                        break;
+                    }
                 }
             }
         }
