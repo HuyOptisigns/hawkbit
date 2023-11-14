@@ -492,6 +492,15 @@ public interface ControllerManagement {
     @PreAuthorize(SpringEvalExpressions.IS_CONTROLLER)
     Optional<Action> getActionByExternalRef(@NotEmpty String externalRef);
 
+     /**
+     * [HUYK] Get max Action (OTA Rollouts) count of a controllerId
+     *
+     * @param controllerId
+     *            of the target to delete
+     */
+    @PreAuthorize(SpringEvalExpressions.IS_CONTROLLER)
+    Long getMaxActionCount(@NotEmpty String controllerId);
+
     /**
      * Delete a single target.
      *

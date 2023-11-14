@@ -371,6 +371,10 @@ public class JpaControllerManagement extends JpaActionManagement implements Cont
                 .orElseThrow(() -> new EntityNotFoundException(Target.class, controllerId));
         targetRepository.deleteById(target.getId());
     }
+    //HUYK: Get max action for a controllerId
+     public Long getMaxActionCount(@NotEmpty final String controllerId) {
+        return actionRepository.countByTargetControllerId(controllerId);
+    }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
