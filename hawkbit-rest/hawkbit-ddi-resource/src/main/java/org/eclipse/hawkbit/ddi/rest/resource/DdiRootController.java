@@ -167,7 +167,7 @@ public class DdiRootController implements DdiRootControllerRestApi {
         //HUYK: controllerManagement.findActiveActionWithHighestWeight() always returns the first OTA rollout of a controllerId
         // which will be in RETRIEVED status if a device is handling that OTA rollout. Then we need to find if that controllerId
         // has more OTA rollouts and re-assign a next RUNNING OTA rollout to activeAction so that hawkbit will send to next target device
-        if(activeAction.getStatus() == Status.RETRIEVED) {
+        if(activeAction != null && activeAction.getStatus() == Status.RETRIEVED) {
             int maxActionCount = controllerManagement.getMaxActionCount(controllerId).intValue();
             List<Action> activeActions = controllerManagement.findActiveActionsWithHighestWeight(controllerId,maxActionCount);
             int len = activeActions.size();
@@ -185,14 +185,14 @@ public class DdiRootController implements DdiRootControllerRestApi {
         checkAndCancelExpiredAction(activeAction);
 
         //HUYK: If no more OTA rollout in RUNNING state, return NOT_FOUND(404) to target device
-        if(activeAction.getStatus() == Status.RETRIEVED) {
+        if(activeAction != null && activeAction.getStatus() == Status.RETRIEVED) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(DataConversionHelper.fromTarget(target, installedAction, activeAction,
-                    activeAction == null ? controllerManagement.getPollingTime()
-                            : controllerManagement.getPollingTimeForAction(activeAction.getId()),
-                    tenantAware), HttpStatus.OK);
-        }
+        } 
+        
+        return new ResponseEntity<>(DataConversionHelper.fromTarget(target, installedAction, activeAction,
+                activeAction == null ? controllerManagement.getPollingTime()
+                        : controllerManagement.getPollingTimeForAction(activeAction.getId()),
+                tenantAware), HttpStatus.OK);
     }
 
     @Override
