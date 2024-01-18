@@ -18,7 +18,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-
+import org.eclipse.hawkbit.repository.model.Rollout;
+import org.eclipse.hawkbit.repository.model.Rollout.RolloutStatus;
 import org.eclipse.hawkbit.api.ArtifactUrlHandler;
 import org.eclipse.hawkbit.artifact.repository.model.DbArtifact;
 import org.eclipse.hawkbit.ddi.json.model.DdiActionFeedback;
@@ -188,7 +189,10 @@ public class DdiRootController implements DdiRootControllerRestApi {
         if(activeAction != null && activeAction.getStatus() == Status.RETRIEVED) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } 
+        Rollout rollout = activeAction.getRollout();
         
+        //HUYK:Change OTA status to DOWNLOADED here
+        rollout.setStatus(RolloutStatus.DOWNLOADED);
         return new ResponseEntity<>(DataConversionHelper.fromTarget(target, installedAction, activeAction,
                 activeAction == null ? controllerManagement.getPollingTime()
                         : controllerManagement.getPollingTimeForAction(activeAction.getId()),
@@ -355,19 +359,15 @@ public class DdiRootController implements DdiRootControllerRestApi {
 
         final Target target = findTarget(controllerId);
         final Action action = findActionForTarget(actionId, target);
-
         if (action.isWaitingConfirmation()) {
             return ResponseEntity.notFound().build();
         }
-
         if (!action.isActive()) {
             LOG.warn("Updating action {} with feedback {} not possible since action not active anymore.",
                     action.getId(), feedback.getStatus());
             return new ResponseEntity<>(HttpStatus.GONE);
         }
-
         controllerManagement.addUpdateActionStatus(generateUpdateStatus(feedback, controllerId, actionId));
-
         return ResponseEntity.ok().build();
 
     }

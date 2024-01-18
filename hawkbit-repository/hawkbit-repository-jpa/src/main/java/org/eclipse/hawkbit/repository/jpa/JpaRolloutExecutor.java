@@ -154,6 +154,7 @@ public class JpaRolloutExecutor implements RolloutExecutor {
             handleStartingRollout(rollout);
             break;
         case RUNNING:
+        case DOWNLOADED:
             handleRunningRollout((JpaRollout) rollout);
             break;
         case STOPPING:
@@ -314,7 +315,6 @@ public class JpaRolloutExecutor implements RolloutExecutor {
             LOGGER.debug("Rollout {} has {} running groups", rollout.getId(), rolloutGroupsRunning.size());
             executeRolloutGroups(rollout, rolloutGroupsRunning);
         }
-
         if (isRolloutComplete(rollout)) {
             LOGGER.info("Rollout {} is finished, setting FINISHED status", rollout);
             rollout.setStatus(RolloutStatus.FINISHED);
@@ -488,7 +488,7 @@ public class JpaRolloutExecutor implements RolloutExecutor {
 
         deploymentManagement.startScheduledActionsByRolloutGroupParent(rollout.getId(),
                 rollout.getDistributionSet().getId(), null);
-
+                
         rolloutGroup.setStatus(RolloutGroupStatus.RUNNING);
         rolloutGroupRepository.save(rolloutGroup);
 

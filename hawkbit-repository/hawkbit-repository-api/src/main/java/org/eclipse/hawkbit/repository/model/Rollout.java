@@ -58,6 +58,7 @@ public interface Rollout extends NamedEntity {
      */
     RolloutStatus getStatus();
 
+    void setStatus(final RolloutStatus status);
     /**
      * @return {@link ActionType} of the rollout.
      */
@@ -161,6 +162,11 @@ public interface Rollout extends NamedEntity {
          * Rollout is running.
          */
         RUNNING,
+
+        /**
+         * Rollout has been downloaded.
+         */
+        DOWNLOADED,
 
         /**
          * Rollout is finished.
