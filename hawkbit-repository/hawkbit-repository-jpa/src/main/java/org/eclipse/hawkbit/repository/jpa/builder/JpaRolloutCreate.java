@@ -32,6 +32,7 @@ public class JpaRolloutCreate extends AbstractRolloutUpdateCreate<RolloutCreate>
         rollout.setWeight(weight);
         //HUYK Assign OTA ID from a POST API to a new rollout
         rollout.setDeploymentBase(deploymentBase);
+        rollout.setDownloadedAt(downloadedAt);
 
         if (actionType != null) {
             rollout.setActionType(actionType);

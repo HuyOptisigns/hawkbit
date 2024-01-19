@@ -111,6 +111,8 @@ public interface RolloutCreate {
      */
     RolloutCreate startAt(Long startAt);
 
+    RolloutCreate downloadedAt(Long downloadedAt);
+
     //HUYK: Implement the abstract method to set OTA ID from a POST API
     /**
      * set OTA ID

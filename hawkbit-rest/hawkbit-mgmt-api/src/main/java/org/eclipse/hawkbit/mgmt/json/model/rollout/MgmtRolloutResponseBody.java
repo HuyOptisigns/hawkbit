@@ -68,6 +68,10 @@ public class MgmtRolloutResponseBody extends MgmtNamedEntity {
     //HUYK: Add a new json field to report OTA ID of a rollout
     @JsonProperty
     private Long deploymentBase;
+
+    @JsonProperty
+    private Long downloadedAt;
+        
     //HUYK: Add a new method to assign the current OTA ID to a reponse body
     public void setDeploymentBase(Long deploy_base) {
         deploymentBase = deploy_base;
@@ -127,6 +131,14 @@ public class MgmtRolloutResponseBody extends MgmtNamedEntity {
 
     public Long getStartAt() {
         return startAt;
+    }
+
+    public void setDownloadedAt(final Long downloadedAt) {
+      this.downloadedAt = downloadedAt;
+    }
+
+    public Long getDownloadedAt() {
+      return downloadedAt;
     }
 
     public void setForcetime(final Long forcetime) {

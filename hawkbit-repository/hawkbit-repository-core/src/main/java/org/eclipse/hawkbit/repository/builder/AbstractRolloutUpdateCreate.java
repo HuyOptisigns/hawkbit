@@ -36,6 +36,7 @@ public abstract class AbstractRolloutUpdateCreate<T> extends AbstractNamedEntity
     protected Long startAt;
     //HUYK Add new property to Astract class 
     protected Integer deploymentBase;
+    protected Long downloadedAt;
 
     @Min(Action.WEIGHT_MIN)
     @Max(Action.WEIGHT_MAX)
@@ -124,6 +125,11 @@ public abstract class AbstractRolloutUpdateCreate<T> extends AbstractNamedEntity
     public T deploymentBase(final Integer deploymentBase) {
         this.deploymentBase = deploymentBase;
         return (T) this;
+    }
+
+    public T downloadedAt(final Long downloadedAt) {
+      this.downloadedAt = downloadedAt;
+      return (T) this;
     }
 
     public Optional<Long> getSet() {

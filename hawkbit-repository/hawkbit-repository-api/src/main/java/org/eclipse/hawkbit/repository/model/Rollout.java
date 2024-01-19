@@ -81,6 +81,13 @@ public interface Rollout extends NamedEntity {
     Long getStartAt();
 
     /**
+     * @return Timestamp when the rollout should be downloaded.
+     *         
+     */
+    Long getDownloadedAt();
+
+    public void setDownloadedAt(final Long downloadedAt);
+    /**
      * @return number of {@link Target}s in this rollout.
      */
     long getTotalTargets();

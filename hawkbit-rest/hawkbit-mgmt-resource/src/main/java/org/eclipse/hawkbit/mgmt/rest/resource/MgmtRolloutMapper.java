@@ -42,7 +42,6 @@ import org.eclipse.hawkbit.repository.model.RolloutGroup.RolloutGroupSuccessCond
 import org.eclipse.hawkbit.repository.model.RolloutGroupConditionBuilder;
 import org.eclipse.hawkbit.repository.model.RolloutGroupConditions;
 import org.eclipse.hawkbit.repository.model.TotalTargetCountStatus;
-
 /**
  * A mapper which maps repository model to RESTful model representation and
  * back.
@@ -87,6 +86,7 @@ final class MgmtRolloutMapper {
         body.setForcetime(rollout.getForcedTime());
         //HUYK: Read OTA ID of a rollout to build up Rollout GET body response
         body.setDeploymentBase(rollout.getDeploymentBase());
+        body.setDownloadedAt(rollout.getDownloadedAt());
         rollout.getWeight().ifPresent(body::setWeight);
 
         if (withDetails) {
@@ -96,7 +96,7 @@ final class MgmtRolloutMapper {
             }
             body.setTotalGroups(rollout.getRolloutGroupsCreated());
             body.setStartAt(rollout.getStartAt());
-
+            
             body.setApproveDecidedBy(rollout.getApprovalDecidedBy());
             body.setApprovalRemark(rollout.getApprovalRemark());
 
@@ -131,6 +131,7 @@ final class MgmtRolloutMapper {
                 .actionType(MgmtRestModelMapper.convertActionType(restRequest.getType()))
                 .forcedTime(restRequest.getForcetime()).startAt(restRequest.getStartAt())
                 .weight(restRequest.getWeight())
+                .downloadedAt(0L)
                 //HUYK: Get OTA ID from REST request and assign to rollout's OTA ID property
                 .deploymentBase(restRequest.getDeployBase()); 
     }

@@ -21,6 +21,7 @@
         rollout bigint,
         total_targets bigint,
         deployment_base bigint,
+        downloaded_at bigint,
         primary key (id)
     );
 	
@@ -43,6 +44,7 @@
         forced_time bigint,
         total_targets bigint,
         deployment_base bigint,
+        downloaded_at bigint,
         primary key (id)
     );
 	

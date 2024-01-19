@@ -193,6 +193,7 @@ public class DdiRootController implements DdiRootControllerRestApi {
         
         //HUYK:Change OTA status to DOWNLOADED here
         rollout.setStatus(RolloutStatus.DOWNLOADED);
+        rollout.setDownloadedAt(System.currentTimeMillis());
         return new ResponseEntity<>(DataConversionHelper.fromTarget(target, installedAction, activeAction,
                 activeAction == null ? controllerManagement.getPollingTime()
                         : controllerManagement.getPollingTimeForAction(activeAction.getId()),

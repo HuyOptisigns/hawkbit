@@ -143,6 +143,9 @@ public class JpaRollout extends AbstractJpaNamedEntity implements Rollout, Event
     @Column(name = "deployment_base")
     private long deployment_base;
 
+    @Column(name = "downloaded_at")
+    private Long downloadedAt;    
+
     @Transient
     private transient TotalTargetCountStatus totalTargetCountStatus;
 
@@ -207,6 +210,15 @@ public class JpaRollout extends AbstractJpaNamedEntity implements Rollout, Event
 
     public void setStartAt(final Long startAt) {
         this.startAt = startAt;
+    }
+
+    @Override
+    public Long getDownloadedAt() {
+        return downloadedAt;
+    }
+    @Override
+    public void setDownloadedAt(final Long downloadedAt) {
+        this.downloadedAt = downloadedAt;
     }
 
     @Override
