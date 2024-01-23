@@ -389,8 +389,10 @@ public class JpaRolloutManagement implements RolloutManagement {
             ConcurrencyFailureException.class }, maxAttempts = Constants.TX_RT_MAX, backoff = @Backoff(delay = Constants.TX_RT_DELAY))
     public void pauseRollout(final long rolloutId) {
         final JpaRollout rollout = getRolloutAndThrowExceptionIfNotFound(rolloutId);
-        if (RolloutStatus.RUNNING != rollout.getStatus()) {
-            throw new RolloutIllegalStateException("Rollout can only be paused in state running but current state is "
+        if ((RolloutStatus.RUNNING != rollout.getStatus()) &&   
+            (RolloutStatus.UPDATE_FAILURE != rollout.getStatus()) 
+        ) {
+            throw new RolloutIllegalStateException("Rollout can only be paused in state running or update failure but current state is "
                     + rollout.getStatus().name().toLowerCase());
         }
         // setting the complete rollout only in paused state. This is sufficient
@@ -398,7 +400,9 @@ public class JpaRolloutManagement implements RolloutManagement {
         // not started until rollout goes back to running state again. The
         // periodically check for running rollouts will skip rollouts in pause
         // state.
-        rollout.setStatus(RolloutStatus.PAUSED);
+        //HUYK: Set rollout status to UPDATE FAILURE so that hawkbit reports failed to MDM API client
+        //rollout.setStatus(RolloutStatus.PAUSED);
+        rollout.setStatus(RolloutStatus.UPDATE_FAILURE);
         rolloutRepository.save(rollout);
     }
 

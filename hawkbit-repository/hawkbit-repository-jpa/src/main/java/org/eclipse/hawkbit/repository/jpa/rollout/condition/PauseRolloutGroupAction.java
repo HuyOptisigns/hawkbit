@@ -12,6 +12,7 @@ import org.eclipse.hawkbit.repository.RolloutManagement;
 import org.eclipse.hawkbit.repository.jpa.RolloutGroupRepository;
 import org.eclipse.hawkbit.repository.jpa.model.JpaRolloutGroup;
 import org.eclipse.hawkbit.repository.model.Rollout;
+import org.eclipse.hawkbit.repository.model.Rollout.RolloutStatus;
 import org.eclipse.hawkbit.repository.model.RolloutGroup;
 import org.eclipse.hawkbit.repository.model.RolloutGroup.RolloutGroupStatus;
 import org.eclipse.hawkbit.security.SystemSecurityContext;
@@ -43,10 +44,12 @@ public class PauseRolloutGroupAction implements RolloutGroupActionEvaluator<Roll
     @Override
     public void exec(final Rollout rollout, final RolloutGroup rolloutG) {
         final JpaRolloutGroup rolloutGroup = (JpaRolloutGroup) rolloutG;
-
         systemSecurityContext.runAsSystem(() -> {
-            rolloutGroup.setStatus(RolloutGroupStatus.ERROR);
-            rolloutGroupRepository.save(rolloutGroup);
+            //HUYK: Skip setting RolloutGroupStatus to ERROR but set rollout Status to UPDATE_FAILURE
+            // so that hawkbit server shows failed status when a client polls rollout status
+            //rolloutGroup.setStatus(RolloutGroupStatus.ERROR);
+            //rolloutGroupRepository.save(rolloutGroup);
+            rollout.setStatus(RolloutStatus.UPDATE_FAILURE);
             rolloutManagement.pauseRollout(rollout.getId());
             return null;
         });

@@ -208,7 +208,10 @@ public interface Rollout extends NamedEntity {
          * @deprecated legacy status is not used anymore
          */
         @Deprecated
-        ERROR_STARTING
+        ERROR_STARTING,
+
+        //HUYK: Add new state to indicate OTA failure reported by devices
+        UPDATE_FAILURE
     }
 
     /**
