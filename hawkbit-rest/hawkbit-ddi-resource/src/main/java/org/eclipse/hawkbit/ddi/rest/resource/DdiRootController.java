@@ -155,9 +155,9 @@ public class DdiRootController implements DdiRootControllerRestApi {
                         new ServletServerHttpRequest(requestResponseContextHolder.getHttpServletRequest())),
                 HttpStatus.OK);
     }
-
+    //HUYK: Add "synchronized" to make this function to be accessed by one thread at a time
     @Override
-    public ResponseEntity<DdiControllerBase> getControllerBase(@PathVariable("tenant") final String tenant,
+    public synchronized ResponseEntity<DdiControllerBase> getControllerBase(@PathVariable("tenant") final String tenant,
             @PathVariable("controllerId") final String controllerId) {
         LOG.debug("getControllerBase({})", controllerId);
         
@@ -188,12 +188,19 @@ public class DdiRootController implements DdiRootControllerRestApi {
         //HUYK: If no more OTA rollout in RUNNING state, return NOT_FOUND(404) to target device
         if(activeAction != null && activeAction.getStatus() == Status.RETRIEVED) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } 
-        Rollout rollout = activeAction.getRollout();
+        }
         
-        //HUYK:Change OTA status to DOWNLOADED here
-        rollout.setStatus(RolloutStatus.DOWNLOADED);
-        rollout.setDownloadedAt(System.currentTimeMillis());
+        if(activeAction != null) {
+          Rollout rollout = activeAction.getRollout();
+        
+          //HUYK:Change OTA status to DOWNLOADED here
+          rollout.setStatus(RolloutStatus.DOWNLOADED);
+          rollout.setDownloadedAt(System.currentTimeMillis());
+          //HUYK: Set RETRIEVED state here to avoid one OTA rollout can be seen by multiple devices
+          // so that some devices will see error code 410 when the first device claims as the owner of an OTA rollout
+          controllerManagement.registerRetrieved(activeAction.getId(), RepositoryConstants.SERVER_MESSAGE_PREFIX
+                    + "Target retrieved update action and should start now the download.");
+        } 
         return new ResponseEntity<>(DataConversionHelper.fromTarget(target, installedAction, activeAction,
                 activeAction == null ? controllerManagement.getPollingTime()
                         : controllerManagement.getPollingTimeForAction(activeAction.getId()),
