@@ -147,6 +147,12 @@ public class JpaRollout extends AbstractJpaNamedEntity implements Rollout, Event
     @Column(name = "downloaded_at")
     private Long downloadedAt;    
 
+    @Column(name = "device_name")
+    private String deviceName;  
+    
+    @Column(name = "device_uuid")
+    private String deviceUUID;  
+
     @Transient
     private transient TotalTargetCountStatus totalTargetCountStatus;
 
@@ -221,6 +227,24 @@ public class JpaRollout extends AbstractJpaNamedEntity implements Rollout, Event
     public void setDownloadedAt(final Long downloadedAt) {
         this.downloadedAt = downloadedAt;
     }
+
+    @Override
+    public String getDeviceName() {
+        return deviceName;
+    }
+    @Override
+    public void setDeviceName(final String device_name) {
+        this.deviceName = device_name;
+    }
+
+    @Override
+    public String getDeviceUUID() {
+        return deviceUUID;
+    }
+    @Override
+    public void setDeviceUUID(final String device_uuid) {
+        this.deviceUUID = device_uuid;
+    }    
 
     @Override
     public ActionType getActionType() {

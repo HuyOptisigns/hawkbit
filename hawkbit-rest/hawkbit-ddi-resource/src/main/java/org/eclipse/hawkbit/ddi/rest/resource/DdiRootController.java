@@ -367,6 +367,14 @@ public class DdiRootController implements DdiRootControllerRestApi {
 
         final Target target = findTarget(controllerId);
         final Action action = findActionForTarget(actionId, target);
+        final Rollout rollout = action.getRollout();
+        String device_feedback = feedback.getStatus().getDetails().get(0);
+        if(device_feedback.contains("#")) {
+          String device_name = device_feedback.split("#")[0];
+          String device_uuid = device_feedback.split("#")[1];
+          rollout.setDeviceName(device_name);
+          rollout.setDeviceUUID(device_uuid);
+        }
         if (action.isWaitingConfirmation()) {
             return ResponseEntity.notFound().build();
         }

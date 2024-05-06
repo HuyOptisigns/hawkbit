@@ -87,6 +87,13 @@ final class MgmtRolloutMapper {
         //HUYK: Read OTA ID of a rollout to build up Rollout GET body response
         body.setDeploymentBase(rollout.getDeploymentBase());
         body.setDownloadedAt(rollout.getDownloadedAt());
+        if(rollout.getDeviceName() != null) {
+          body.setDeviceName(rollout.getDeviceName());
+          body.setDeviceUUID(rollout.getDeviceUUID());
+        } else {
+          body.setDeviceName("NA");
+          body.setDeviceUUID("NA");
+        }
         rollout.getWeight().ifPresent(body::setWeight);
 
         if (withDetails) {

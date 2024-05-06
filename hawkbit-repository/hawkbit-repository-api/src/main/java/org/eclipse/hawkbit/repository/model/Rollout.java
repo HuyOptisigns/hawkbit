@@ -87,6 +87,23 @@ public interface Rollout extends NamedEntity {
     Long getDownloadedAt();
 
     public void setDownloadedAt(final Long downloadedAt);
+    
+    /**
+     * @return Name of device that owns this rollout
+     *         
+     */
+    String getDeviceName();
+
+    public void setDeviceName(final String dev_name);
+
+    /**
+     * @return UUID of device that owns this rollout
+     *         
+     */
+    String getDeviceUUID();
+
+    public void setDeviceUUID(final String dev_name);    
+
     /**
      * @return number of {@link Target}s in this rollout.
      */

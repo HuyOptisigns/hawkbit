@@ -71,7 +71,13 @@ public class MgmtRolloutResponseBody extends MgmtNamedEntity {
 
     @JsonProperty
     private Long downloadedAt;
-        
+
+    @JsonProperty
+    private String deviceName;
+
+    @JsonProperty
+    private String deviceUUID;
+
     //HUYK: Add a new method to assign the current OTA ID to a reponse body
     public void setDeploymentBase(Long deploy_base) {
         deploymentBase = deploy_base;
@@ -139,6 +145,22 @@ public class MgmtRolloutResponseBody extends MgmtNamedEntity {
 
     public Long getDownloadedAt() {
       return downloadedAt;
+    }
+
+    public void setDeviceName(String dev_name) {
+      this.deviceName = dev_name;
+    }
+
+    public String getDeviceName() {
+      return deviceName;
+    }
+
+    public void setDeviceUUID(String dev_uuid) {
+      this.deviceUUID = dev_uuid;
+    }
+
+    public String getDeviceUUID() {
+      return deviceUUID;
     }
 
     public void setForcetime(final Long forcetime) {

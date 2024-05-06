@@ -22,6 +22,8 @@
         total_targets bigint,
         deployment_base bigint,
         downloaded_at bigint,
+        device_name varchar(128),
+        device_uuid varchar(128),
         primary key (id)
     );
 	
@@ -45,6 +47,8 @@
         total_targets bigint,
         deployment_base bigint,
         downloaded_at bigint,
+        device_name varchar(128),
+        device_uuid varchar(128),
         primary key (id)
     );
 	
