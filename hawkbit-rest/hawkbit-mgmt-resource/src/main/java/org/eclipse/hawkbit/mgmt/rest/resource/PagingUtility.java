@@ -46,10 +46,19 @@ public final class PagingUtility {
     }
 
     static int sanitizePageLimitParam(final int pageLimit) {
+        String env_paging = System.getenv("HAWKBIT_MAX_RESPONSES");
+        int env_max_paging = 0;
+        if(env_paging != null) {
+          env_max_paging = Integer.parseInt(env_paging);
+        }
         if (pageLimit < 1) {
             return MgmtRestConstants.REQUEST_PARAMETER_PAGING_DEFAULT_LIMIT_VALUE;
         } else if (pageLimit > MgmtRestConstants.REQUEST_PARAMETER_PAGING_MAX_LIMIT) {
-            return MgmtRestConstants.REQUEST_PARAMETER_PAGING_MAX_LIMIT;
+            if(env_max_paging > 0) {
+              return env_max_paging;
+            } else {
+              return MgmtRestConstants.REQUEST_PARAMETER_PAGING_MAX_LIMIT;
+            }
         }
         return pageLimit;
     }
